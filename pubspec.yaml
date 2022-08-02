@@ -1,0 +1,39 @@
+name: flex_pozivnica_za_kurira
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  group_radio_button: ^1.2.0
+  number_inc_dec: ^0.8.0
+  multiselect: ^0.0.7
+  firebase_core: ^1.19.2
+  firebase_auth: ^3.4.2
+  cloud_firestore: ^3.3.0
+  provider: ^6.0.3
+  http: ^0.13.4
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/flex_logo.png
+    - assets/images/header_background_image.jpeg
+    - assets/images/viber_icon.png
+    - assets/images/call_center.jpeg
+    - assets/images/email_icon.png
+    - assets/images/home_icon.png
+    - assets/images/location_icon.png
+    - assets/images/telephone_icon.png
+
+
