@@ -38,7 +38,7 @@ class _DeliveryDetailsState extends State<DeliveryDetails> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: MediaQuery.of(context).size.width >= 1200 ? CrossAxisAlignment.center : (MediaQuery.of(context).size.width < 1200 && MediaQuery.of(context).size.width > 800) ? CrossAxisAlignment.start : MediaQuery.of(context).size.width <=800 ? CrossAxisAlignment.start : CrossAxisAlignment.start,
       children: [
         TopContainer(label: kDeliveryData),
         CustomIncrementDecrementField(label: kNumberPackage, controllerNumber: widget.controllerNumber),

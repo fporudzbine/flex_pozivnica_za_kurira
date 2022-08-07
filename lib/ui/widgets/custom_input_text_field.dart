@@ -145,6 +145,8 @@ class _CustomInputTextFieldState extends State<CustomInputTextField> {
                 :
                 widget.label == kValue ? widget.controllerDeliveryValue
                 :
+                widget.label == kBankAccountNumber + kBankAccountNumberNote ? widget.controllerBankAccountNumber
+                :
                 null,
                 keyboardType: widget.isForBuyOut ? TextInputType.numberWithOptions(decimal: true, signed: false) : TextInputType.text,
                 inputFormatters: widget.isForBuyOut ?

@@ -28,7 +28,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/flex_logo.png
-    - assets/images/header_background_image.jpeg
+    - assets/images/header_background_image.jpg
     - assets/images/viber_icon.png
     - assets/images/call_center.jpeg
     - assets/images/email_icon.png

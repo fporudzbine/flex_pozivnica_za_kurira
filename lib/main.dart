@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flex pozivnica za kurira',
       theme: ThemeData(),
       home: MainScreen(),
     );

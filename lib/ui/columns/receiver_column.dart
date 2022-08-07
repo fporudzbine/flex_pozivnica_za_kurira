@@ -37,7 +37,7 @@ TextEditingController controllerDeliveryValue;
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: MediaQuery.of(context).size.width > 1200 ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         TopContainer(
           label: kReceiverData,
