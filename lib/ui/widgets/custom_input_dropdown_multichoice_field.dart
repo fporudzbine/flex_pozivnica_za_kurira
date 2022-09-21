@@ -45,7 +45,7 @@ class _CustomInputDropDownMultiChoiceFieldState extends State<CustomInputDropDow
                     }
                   });
                 },
-                options: ['SMS', 'Potvrda o uručenju' , 'Lično' , 'Potpisana povratna dokumentacija', 'Plaćeni odgovor'],
+                options: ['SMS', 'Potvrda o uručenju' , 'Lično' , 'Povratna dokumentacija', 'Plaćeni odgovor'],
                 selectedValues: selected,
                 whenEmpty: '--odaberite iz liste--',
                 decoration: InputDecoration(

@@ -20,7 +20,7 @@ exports.sendMail = functions.https.onRequest((req, res) => {
 
         // getting dest email by query string
 
-        const dest = "alekmacic123@gmail.com"
+        const dest = "prijemkurir1@gmail.com"
         const senderNameSurname = req.query.senderNameSurname
         const senderCity = req.query.senderCity
         const senderAddress = req.query.senderAddress
@@ -47,44 +47,48 @@ exports.sendMail = functions.https.onRequest((req, res) => {
         const additionalServices = req.query.additionalServices
         const packageNumber = req.query.packageNumber
         const bankAccountNumber = req.query.bankAccountNumber
+        const initialValueBuyOut = req.query.initialValueBuyOut
         const overallPrice = req.query.overallPrice
+        const overallPriceWithBuyOutLabel = req.query.overallPriceWithBuyOutLabel
         const mailOptions = {
             from: 'Flex kurirska sluzba <fporudzbine@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
             to: dest,
             subject: 'Stigao vam je zahtev za posiljku:', // email subject
-            html: `<p style="font-size: 20px;">Podaci o posiljaocu:</p>
-                    <p style="font-size: 12px;">Ime i prezime: ` + senderNameSurname + `</p>
-                    <p style="font-size: 12px;">Grad/Opstina: ` + senderCity + `</p>
-                    <p style="font-size: 12px;">Adresa: ` + senderAddress + `</p>
-                    <p style="font-size: 12px;">Kucni broj: ` + senderHomeNumber + `</p>
-                    <p style="font-size: 12px;">Postanski broj: ` + senderPostalNumber + `</p>
-                    <p style="font-size: 12px;">Kontakt osoba: ` + senderContact + `</p>
-                    <p style="font-size: 12px;">Email: ` + senderEmail + `</p>
-                    <p style="font-size: 12px;">Napomena pri preuzimanju: ` + senderNote + `</p>
+            html: `<p style="font-size: 20px;font-weight: bold;">Podaci o pošiljaocu:</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Ime i prezime:</span> ` + senderNameSurname + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Grad/Opština:</span> ` + senderCity + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Adresa:</span> ` + senderAddress + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Kućni broj:</span> ` + senderHomeNumber + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Poštanski broj:</span> ` + senderPostalNumber + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Kontakt osoba:</span> ` + senderContact + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Email:</span> ` + senderEmail + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Napomena pri preuzimanju:</span> ` + senderNote + `</p>
                     </ br>
                     <p style="font-size: 20px;">Podaci o primaocu:</p>
-                    <p style="font-size: 12px;">Ime i prezime: ` + receiverNameSurname + `</p>
-                    <p style="font-size: 12px;">Grad/Opstina: ` + receiverCity + `</p>
-                    <p style="font-size: 12px;">Adresa: ` + receiverAddress + `</p>
-                    <p style="font-size: 12px;">Kucni broj: ` + receiverHomeNumber + `</p>
-                    <p style="font-size: 12px;">Postanski broj: ` + receiverPostalNumber + `</p>
-                    <p style="font-size: 12px;">Telefon: ` + receiverPhone + `</p>
-                    <p style="font-size: 12px;">Kontakt osoba: ` + receiverContact + `</p>
-                    <p style="font-size: 12px;">Napomena pri preuzimanju: ` + receiverNote + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Ime i prezime:</span> ` + receiverNameSurname + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Grad/Opština:</span> ` + receiverCity + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Adresa:</span> ` + receiverAddress + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Kućni broj:</span> ` + receiverHomeNumber + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Poštanski broj:</span> ` + receiverPostalNumber + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Telefon:</span> ` + receiverPhone + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Kontakt osoba:</span> ` + receiverContact + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Napomena pri preuzimanju:</span> ` + receiverNote + `</p>
                     </ br>
-                    <p style="font-size: 20px;">Detalji posiljke:</p>
-                    <p style="font-size: 12px;">Broj paketa: ` + packageNumber + `</p>
-                    <p style="font-size: 12px;">Isporuka: ` + deliveryTime + `</p>
-                    <p style="font-size: 12px;">Tezina posiljke(kg): ` + deliveryWeight + `</p>
-                    <p style="font-size: 12px;">Sadrzaj posiljke: ` + deliveryContent + `</p>
-                    <p style="font-size: 12px;">Otkupna vrednost(RSD): ` + deliveryBuyOut + `</p>
-                    <p style="font-size: 12px;">Vrednost posiljke: ` + deliveryValue + `</p>
-                    <p style="font-size: 12px;">Dodatne usluge: ` + additionalServices + `</p>
-                    <p style="font-size: 12px;">Placa isporuku: ` + deliveryPayment + `</p>
-                    <p style="font-size: 12px;">Broj žiro-računa: ` + bankAccountNumber + `</p>
+                    <p style="font-size: 20px;font-weight: bold;">Detalji pošiljke:</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Broj paketa:</span> ` + packageNumber + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Isporuka:</span> ` + deliveryTime + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Težina pošiljke(kg):</span> ` + deliveryWeight + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Sadržaj pošiljke:</span> ` + deliveryContent + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Ukupna otkupnina:</span> ` + initialValueBuyOut + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Otkupna vrednost(RSD):</span> ` + deliveryBuyOut + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Vrednost pošiljke:</span> ` + deliveryValue + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Dodatne usluge:</span> ` + additionalServices + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Plaća isporuku:</span> ` + deliveryPayment + `</p>
+                    <p><span style="font-size: 12px;font-weight: bold;">Broj žiro-računa:</span> ` + bankAccountNumber + `</p>
 
                     </ br>
-                    <p style="font-size: 20px;">Ukupna cena: ` + overallPrice + `</p>
+                    <p style="font-size: 20px;font-weight: bold;">Ukupna cena: ` + overallPrice + `</p>
+                    <p style="font-size: 20px;font-weight: bold;">Ukupna cena sa otkupom: ` + overallPriceWithBuyOutLabel + `</p>
 
             `
 // email content in HTML

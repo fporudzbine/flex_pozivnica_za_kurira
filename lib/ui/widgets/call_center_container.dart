@@ -21,7 +21,7 @@ class CallCenterContainer extends StatelessWidget {
             width: 500,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/call_center.jpeg"),
+                image: AssetImage("assets/images/call_center.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -71,7 +71,7 @@ class CallCenterContainer extends StatelessWidget {
             width: 500,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("assets/images/call_center.jpeg"),
+                image: AssetImage("assets/images/call_center.jpg"),
                 fit: BoxFit.cover,
               ),
             ),

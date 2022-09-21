@@ -5,11 +5,18 @@ import 'package:collection/collection.dart';
 
 class OverallPrice with ChangeNotifier, DiagnosticableTreeMixin {
   String addedSum = '';
-  List<int> list = [];
-  int sum = 0;
+  List<double> list = [];
+  double sum = 0;
   String stringSum = '';
+  String initialValueBuyOut = '';
 
-  void add(int additionValueStandard) {
+  void reset() {
+    list.clear();
+    sum = 0;
+    stringSum = "0,00 RSD";
+    notifyListeners();
+  }
+  void add(double additionValueStandard) {
     list.add(additionValueStandard);
     sum = list.sum;
     stringSum = sum.toString() + ",00 RSD";

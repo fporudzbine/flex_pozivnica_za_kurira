@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import '../../labels.dart';
+import '../../overall_price.dart';
 
 class CustomInputTextField extends StatefulWidget {
   CustomInputTextField(
@@ -72,6 +74,14 @@ class CustomInputTextField extends StatefulWidget {
 
 class _CustomInputTextFieldState extends State<CustomInputTextField> {
 
+  var maskFormatter = new MaskTextInputFormatter(
+      mask: '###-#############-##',
+      filter: { "#": RegExp(r'[0-9]') },
+      type: MaskAutoCompletionType.lazy
+  );
+  String cutRSD = '';
+  double prevValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -97,11 +107,44 @@ class _CustomInputTextFieldState extends State<CustomInputTextField> {
             height: 45,
             child: Focus(
               onFocusChange: (hasFocus){
-                if(!hasFocus && widget.label == kValue){
-                  widget.controllerDeliveryValue.text.contains(".00 RSD") ? widget.controllerDeliveryValue.text = widget.controllerDeliveryValue.text : widget.controllerDeliveryValue.text = "${widget.controllerDeliveryValue.text}.00 RSD";
-                }
-                if (!hasFocus && widget.label == kBuyOut){
-                  widget.controllerDeliveryBuyOut.text.contains(".00 RSD") ? widget.controllerDeliveryBuyOut.text = widget.controllerDeliveryBuyOut.text : widget.controllerDeliveryBuyOut.text = "${widget.controllerDeliveryBuyOut.text}.00 RSD";
+                if(hasFocus){
+                  prevValue = double.parse(cutRSD);
+                } else {
+                  switch(widget.label){
+                    case kBuyOut:
+                      cutRSD = widget.controllerDeliveryBuyOut.text;
+                      break;
+                    case kValue:
+                      cutRSD = widget.controllerDeliveryValue.text;
+                      break;
+                  }
+                  int value = int.parse(cutRSD);
+                  if(widget.label == kBuyOut)context.read<OverallPrice>().initialValueBuyOut = "$cutRSD.00 RSD";
+                  double currValue = widget.label == kBuyOut ? (value*0.012 <= 120 ? 120 : value*0.012) : widget.label == kValue ? (value*0.011 <= 90 ? 90 : value*0.011) : 0;
+                  if (widget.label == kBuyOut){
+                    (currValue != 120 && prevValue == 0) ? context.read<OverallPrice>().add(currValue- prevValue*0.012) : (currValue == 120 && prevValue == 0) ? context.read<OverallPrice>().add(currValue- prevValue*0.012) : (currValue != 120 && prevValue < 12000) ? context.read<OverallPrice>().add(currValue- 120) : (currValue == 120 && prevValue < 12000) ? context.read<OverallPrice>().add(currValue- 120) : (currValue != 120 && prevValue >=12000) ? context.read<OverallPrice>().add(currValue- prevValue*0.012) : (currValue == 120 && prevValue >=12000) ? context.read<OverallPrice>().add(currValue - prevValue*0.012) : context.read<OverallPrice>().add(0);
+                  } else if(widget.label == kValue) {
+                    (currValue != 90 && prevValue == 0)
+                        ? context.read<OverallPrice>()
+                        .add(currValue - prevValue * 0.011)
+                        : (currValue == 90 && prevValue == 0)
+                        ? context.read<OverallPrice>().add(
+                        currValue - prevValue * 0.011)
+                        : (currValue != 90 && prevValue < 9000) ? context.read<
+                        OverallPrice>().add(currValue - 90) : (currValue == 90 &&
+                        prevValue < 9000) ? context.read<OverallPrice>().add(
+                        currValue - 90) : (currValue != 90 && prevValue >= 9000)
+                        ? context.read<OverallPrice>().add(
+                        currValue - prevValue * 0.011)
+                        : (currValue == 120 && prevValue >= 9000)
+                        ? context.read<OverallPrice>().add(
+                        currValue - prevValue * 0.011)
+                        : context.read<OverallPrice>().add(0);
+                  }
+                  setState(() {
+                    if(widget.label == kBuyOut) widget.controllerDeliveryBuyOut.text = "${currValue.toStringAsFixed(2)} RSD";
+                    if(widget.label == kValue) widget.controllerDeliveryValue.text = "${currValue.toStringAsFixed(2)} RSD";
+                  });
                 }
               },
               child: TextField(
@@ -148,7 +191,7 @@ class _CustomInputTextFieldState extends State<CustomInputTextField> {
                 widget.label == kBankAccountNumber + kBankAccountNumberNote ? widget.controllerBankAccountNumber
                 :
                 null,
-                keyboardType: widget.isForBuyOut ? TextInputType.numberWithOptions(decimal: true, signed: false) : TextInputType.text,
+                keyboardType: widget.isForBuyOut || widget.isForAccountNumber ? TextInputType.numberWithOptions(decimal: true, signed: false) : TextInputType.text,
                 inputFormatters: widget.isForBuyOut ?
                 [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
@@ -158,7 +201,7 @@ class _CustomInputTextFieldState extends State<CustomInputTextField> {
                   FilteringTextInputFormatter.digitsOnly,
                 ]   : widget.isForAccountNumber ?
                 [
-                  FilteringTextInputFormatter.digitsOnly,
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\-?\d{0,100}\-?\d{0,100}')),
                 ]   :
                 List.empty(),
                 style: TextStyle(color: Colors.black),
